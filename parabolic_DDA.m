@@ -20,8 +20,8 @@ function coordinate = parabolic_DDA(start, stop, focal_len, reg_bit)
         % DDAX - Interagte Qx register until it is overflow
         Qx = Qx + Px;
         if Qx >= reg_max
-            Qx = Qx - reg_max;
-            dzx = dzx + 1;      % Output pulse for X axis
+            dzx = dzx + floor(Qx / reg_max);      % Output pulse for X axis
+            Qx = mod(Qx, reg_max);
         end
         X = [X dzx];
         % DDAY
@@ -29,8 +29,8 @@ function coordinate = parabolic_DDA(start, stop, focal_len, reg_bit)
         % Interagte Qy register until it is overflow
         Qy = Qy + Py;
         if Qy >= reg_max
-            Qy = Qy - reg_max;
-            dzy = dzy + 1;      % Output pulse for Y axis
+            dzy = dzy + floor(Qy / reg_max);      % Output pulse for Y axis
+            Qy = mod(Qy, reg_max);
         end
         Y = [Y dzy];
     end
